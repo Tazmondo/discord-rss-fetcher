@@ -16,12 +16,12 @@ export default class ArticlePoster
         const channel = guild.channels.get(channelId) as TextChannel
         const message = this.formatPost(article)
 
-        try
-        {
-            await channel.send((roleId ? `<@&${roleId}>` : "") + message)
+        if (message.search("rpilocator") !== -1 && message.search("Stock Alert (UK)") === -1) {
+            roleId = undefined as unknown as string
         }
-        catch (e)
-        {
+        try {
+            await channel.send((roleId ? `<@&${roleId}>` : "") + message)
+        } catch (e) {
             Logger.debugLogError(`Error posting article in channel ${channel.name} in guild ${channel.guild.name}`, e)
         }
     }
